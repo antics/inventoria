@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <head>
+	<meta charset="utf-8">
+    <title>Inventoria - Dela, byt, l&auml;na, k&ouml;p, salj</title>
+    <link rel="stylesheet" href="style/main.css" type="text/css">
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+	<script src="/_utils/script/json2.js"></script>
+	<script src="/_utils/script/jquery.couch.js?0.11.0"></script>
+	<script src="js/form/jquery.form.js"></script>
+	<script src="js/inventoria.js"></script>
+  </head>
+  <body>
+	
+	<div id="content">
+	  <form id="addInventory" action="">		
+		<div class="inputRow">
+		  <input class="key readonly" type="text" value="stad">
+		  <input class="value" type="text" name="stad">
+		</div>
+		<div class="inputRow">
+		  <input class="key readonly" type="text" value="föremål">
+		  <input class="value" type="text" name="föremål">
+		</div>
+		<input id="submitInventory" class="last" type="submit" value="Spara Föremål">
+	  </form>
+
+	  <!-- upload image -->
+	  <!--
+	  <form id="uploadImage" action="http://127.0.0.1:8888/" method="post" enctype="multipart/form-data">
+		<input type="file" name="image">
+	  </form>
+	  -->
+	</div>
+  </body>
+</html>
