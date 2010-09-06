@@ -2,18 +2,24 @@
 <html>
   <head>
 	<meta charset="utf-8">
-    <title>{{föremål}} : {{stad}}</title>
-    <link rel="stylesheet" href="style/main.css" type="text/css">
+    <link rel="stylesheet" href="/inventoria/_design/inventoria/style/main.css" type="text/css">
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
 	<script src="/_utils/script/json2.js"></script>
 	<script src="/_utils/script/jquery.couch.js?0.11.0"></script>
-	<script src="js/form/jquery.form.js"></script>
-	<script src="js/inventoria.js"></script>
+	<script src="/inventoria/_design/inventoria/js/form/jquery.form.js"></script>
+	<script src="/inventoria/_design/inventoria/js/inventoria.js"></script>
+    <title>{{föremål}} : {{stad}}</title>
   </head>
   <body>
-	{{#items}}
-	{{field}}, {{value}} <br>
-	{{/items}}
+	<div id="content">
+	  <table>
+		{{#item}}
+		<tr>
+		  <td>{{field}}</td><td>{{value}}</td>
+		</tr>
+		{{/item}}
+	  </table>
+	 </div>
   </body>
 </html>
 	

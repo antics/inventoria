@@ -88,10 +88,20 @@ var first_time = 0;
 
 function itemSaved (resp) {
 	console.log(resp);
-	new_button = '<button class="button gotoItem" type="button">Gå till Föremål</button>';
+	btn_goto_item = '<button class="button gotoItem" type="button">Gå till föremål</button>';
+	btn_new_item = '<button class="button newItem" type="button">Nytt föremål</button>';
 
-	$('#addInventory').append(new_button);
+	$('#addInventory').append(btn_new_item);
+	$('#addInventory').append(btn_goto_item);
 
+	$('.button.newItem').live('click', function () {
+		$('input').attr('disabled', false);
+		$(this).remove();
+		$('.button.gotoItem').remove();
+		$('input.value').val('');
+	});
+	
+	// Goto item page on button click
 	$('.button.gotoItem').live('click', function () {
 		location.href = '/inventoria/_design/inventoria/_show/item/' + resp.id;
 	});

@@ -13,7 +13,7 @@ function (doc, req) {
 	}
 
 	data = {
-		items: data,
+		item: data,
 		föremål : doc.föremål,
 		stad : doc.stad
 	}
