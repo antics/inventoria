@@ -1,10 +1,11 @@
 function (doc, req) {
+	// !json templates.include
 	// !json templates.item
 	// !code vendor/mustache.js
 
 	var data = [];
 
-	// Extract item properties
+	// Extract item fields
 	for (var field in doc) {
 		if (field == "_id" || field == "_rev" || field == "_revisions") {
 			// do nothing, I don't know why != doesn't work
@@ -14,9 +15,10 @@ function (doc, req) {
 
 	data = {
 		item: data,
-		föremål : doc.föremål,
-		stad : doc.stad
+		title : doc.föremål+' : '+doc.stad
 	}
 
-	return Mustache.to_html(templates.item, data);
+	var html = templates.include.header + templates.item + templates.include.footer;
+	
+	return Mustache.to_html(html, data);
 }

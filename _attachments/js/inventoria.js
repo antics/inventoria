@@ -60,28 +60,29 @@ $(document).ready(function(){
 	
 	// Submit form data to DB
 	$('#addInventory').submit(function () {
-		var fields = $(this).serializeArray();
 
+		var data = prepJSON($(this).serializeArray());
 		$('input').attr('disabled', true);
-
-		var data = '{';
-		jQuery.each(fields, function(i, field) {
-			data = data+'"'+field.name+'": "'+field.value+'",';
-		});
-		// Remove last comma
-		data = data.slice(0, -1);
-		data = data+'}';
-
-		//console.log(data);
-		
 		$.couch.db("inventoria").saveDoc(
-			JSON.parse(data),
+			data,
 			{success: function (resp) { itemSaved (resp) } }
 		);
+
+		return false;
+	});
+
+	$('#login').submit(function () {
+
+		var data = prepJSON($(this).serializeArray());
+		$.couch.login({
+			"name": data.name,
+			"password": data.password,
+			success: function (resp) { handleLogin(resp) }
+		});
 		
 		return false;
 	});
-	
+
 });
 
 var first_time = 0;
@@ -119,6 +120,26 @@ function addFormField () {
 	
 	new_input = '<div class="inputRow"><input class="key" type="text" value="" /> <input class="value" type="text" name="" />'+message+'</div>';
 	$(new_input).insertBefore('#submitInventory');
+}
+
+function handleLogin (response) {
+	console.log(response);
+}
+
+function prepJSON (fields) {
+
+	if (fields.length) {
+		var data = '{';
+		jQuery.each(fields, function(i, field) {
+			data = data+'"'+field.name+'": "'+field.value+'",';
+		});
+		// Remove last comma
+		data = data.slice(0, -1);
+		data = data+'}';
+
+		return JSON.parse(data);
+	} else
+		return {};
 }
 
 function message (message) {
