@@ -2,27 +2,28 @@
 <html>
   <head>
 	<meta charset="utf-8">
-    <title>Inventoria - Dela, byt, låna, köp, sälj</title>
+    <title>Inventoria - Share, lend,  borrow, buy, sell</title>
     <link rel="stylesheet" href="style/main.css" type="text/css">
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
 	<script src="/_utils/script/json2.js"></script>
 	<script src="/_utils/script/jquery.couch.js?0.11.0"></script>
 	<script src="js/form/jquery.form.js"></script>
 	<script src="js/inventoria.js"></script>
+	<script src="js/inventoria.index.js"></script>
   </head>
   <body>
 	
 	<div id="content">
 	  <form id="addItem" action="">		
 		<div class="inputRow">
-		  <input class="key readonly" type="text" value="stad">
-		  <input class="value" type="text" name="stad">
+		  <input class="key readonly" type="text" value="city">
+		  <input class="value" type="text" name="city">
 		</div>
 		<div class="inputRow">
-		  <input class="key readonly" type="text" value="föremål">
-		  <input class="value" type="text" name="föremål">
+		  <input class="key readonly" type="text" value="item">
+		  <input class="value" type="text" name="item">
 		</div>
-		<input id="submitInventory" class="last" type="submit" value="Spara Föremål">
+		<input id="submitInventory" class="last" type="submit" value="Save Item">
 	  </form>
 
 	  <!-- upload image -->
@@ -31,6 +32,10 @@
 		<input type="file" name="image">
 	  </form>
 	  -->
+
+	  <table id="recentItems">
+		<tr><th>Item</th><th>City</th></tr>
+	  </table>
 	</div>
   </body>
 </html>

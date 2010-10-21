@@ -5,6 +5,6 @@ function (newDoc, oldDoc, userCtx) {
 		if (!newDoc[field]) throw({forbidden : message});
 	};
 	
-	require('stad');
-	require('föremål');
+	require('city');
+	require('item');
 }

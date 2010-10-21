@@ -8,6 +8,9 @@ $(document).ready(function(){
 	$('#addItem').submit(function () {
 
 		var data = prepJSON($(this).serializeArray());
+		data.created_at = new Date();
+		data.type = 'item';
+		
 		$('input').attr('disabled', true);
 		$.couch.db("inventoria").saveDoc(
 			data,
