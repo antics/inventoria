@@ -12,27 +12,16 @@
 	<script src="js/inventoria.index.js"></script>
   </head>
   <body>
+
+	<header id="top">
+	  <h1>Inventoria</h1>
+	  <nav>
+		<a href="/inventoria/_design/inventoria/index.html">Search</a>
+		<a href="/inventoria/_design/inventoria/_show/add">Add Item</a>
+	  </nav>
+	</header>
 	
 	<div id="content">
-	  <form id="addItem" action="">		
-		<div class="inputRow">
-		  <input class="key readonly" type="text" value="city">
-		  <input class="value" type="text" name="city">
-		</div>
-		<div class="inputRow">
-		  <input class="key readonly" type="text" value="item">
-		  <input class="value" type="text" name="item">
-		</div>
-		<input id="submitInventory" class="last" type="submit" value="Save Item">
-	  </form>
-
-	  <!-- upload image -->
-	  <!--
-	  <form id="uploadImage" action="http://127.0.0.1:8888/" method="post" enctype="multipart/form-data">
-		<input type="file" name="image">
-	  </form>
-	  -->
-
 	  <table id="recentItems">
 		<tr><th>Item</th><th>City</th></tr>
 	  </table>

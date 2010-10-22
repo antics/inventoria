@@ -11,7 +11,9 @@
     <title>{{title}}</title>
   </head>
   <body>
-	<div id="header">
+	<header id="top">
+	  <h1>Inventoria</h1>
+
 	  <form id="login" action="/_session" method="post">
 		<input type="text" name="name">
 		<input type="password" name="password">
@@ -22,4 +24,10 @@
 		<span class="username"></span>
 		<button class="button logout">Logout</button>
 	  </div>
-	</div>
+
+	  <nav>
+		<a href="/inventoria/_design/inventoria/index.html">Search</a>
+		<a href="/inventoria/_design/inventoria/_show/add">Add Item</a>
+	  </nav>
+
+	</header>

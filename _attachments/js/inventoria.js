@@ -115,8 +115,8 @@ var itemSaved = function (resp) {
 
 	console.log(resp);
 
-	btn_goto_item = '<button class="button gotoItem" type="button">Gå till föremål</button>';
-	btn_new_item = '<button class="button newItem" type="button">Nytt föremål</button>';
+	btn_goto_item = '<button class="button gotoItem" type="button">Goto Item</button>';
+	btn_new_item = '<button class="button newItem" type="button">New Item</button>';
 
 	$('#addItem').append(btn_new_item);
 	$('#addItem').append(btn_goto_item);

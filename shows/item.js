@@ -15,7 +15,7 @@ function (doc, req) {
 
 	data = {
 		item: data,
-		title : doc.föremål+' : '+doc.stad
+		title : doc.item+' : '+doc.city
 	}
 
 	var html = templates.include.header + templates.item + templates.include.footer;

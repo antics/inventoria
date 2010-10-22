@@ -1,4 +1,20 @@
-#header { overflow: hidden }
+body { margin: 0; padding: 0}
+
+header#top {
+	background: black;
+	color: white;
+}
+
+nav { overflow: hidden }
+nav a {
+	float: left;
+	display: block;
+	padding: 7px 10px;
+	margin-right: 7px;
+	background: gray;
+}
+
+header#top h1 { text-align: center }
 
 #content {
 	margin: 0 auto;
