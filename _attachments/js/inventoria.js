@@ -1,6 +1,47 @@
 $(document).ready(function(){
 
 	/*********************************************************
+	 * Search
+	 ********************************************************/
+
+	$('#search').submit(function () {
+		// RegExp for finding "words in quotes"
+		var quoted = new RegExp("\".*?\"");
+		
+		var str = $('#searchString').val();
+		var query = "";
+		
+		// Find quoted item
+		var item = quoted.exec(str);
+		if (item != null) {
+			str = str.replace(item, '');
+			query = 'item:'+item;
+		}
+
+		// Trim away whitespaces
+		str = str.replace(/^\s+|\s+$/g, '');
+		
+		var words = str.split(' ');
+
+		jQuery.each(words, function(i, word) {
+			// Do we have a key:val match?
+			if (word.search(':') > -1) {
+				if (query != '')
+					query += ' AND ';
+				query += word;
+			}
+			// item only search
+			else if (word != '') {
+				if (query != '')
+					query += ' OR ';
+				query += 'item:'+word;
+			}
+		});
+
+		location.href = "http://legnered.cloudant.com/inventoria/_search?q="+query;
+		return false;
+	});
+	/*********************************************************
 	 * Item Submit
 	 ********************************************************/
 
