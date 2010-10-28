@@ -1,46 +1,19 @@
 $(document).ready(function(){
-
+	
+	
 	/*********************************************************
 	 * Search
 	 ********************************************************/
 
 	$('#search').submit(function () {
-		// RegExp for finding "words in quotes"
-		var quoted = new RegExp("\".*?\"");
-		
-		var str = $('#searchString').val();
-		var query = "";
-		
-		// Find quoted item
-		var item = quoted.exec(str);
-		if (item != null) {
-			str = str.replace(item, '');
-			query = 'item:'+item;
-		}
+		var search = new Search();
 
-		// Trim away whitespaces
-		str = str.replace(/^\s+|\s+$/g, '');
+		search.item($('#searchString').val());
 		
-		var words = str.split(' ');
-
-		jQuery.each(words, function(i, word) {
-			// Do we have a key:val match?
-			if (word.search(':') > -1) {
-				if (query != '')
-					query += ' AND ';
-				query += word;
-			}
-			// item only search
-			else if (word != '') {
-				if (query != '')
-					query += ' OR ';
-				query += 'item:'+word;
-			}
-		});
-
-		location.href = "http://legnered.cloudant.com/inventoria/_search?q="+query;
 		return false;
 	});
+
+
 	/*********************************************************
 	 * Item Submit
 	 ********************************************************/
@@ -104,6 +77,86 @@ $(document).ready(function(){
 var cookie = new Cookie();
 var user = new User();
 
+// Options object
+var o = {
+	server: "legnered.cloudant.com",
+	db: "inventoria",
+	uri: "http://legnered.cloudant.com/inventoria"
+};
+
+function Search () {
+
+	this.item = function (search_string) {
+
+		var query = buildQuery(search_string);
+		
+		$.getJSON(o.uri+'/_search?q='+query, function (docs) {
+			var keys = [];
+			console.log(docs);
+			jQuery.each(docs[0].rows, function(i, doc) {
+				keys.push(doc.id);
+			});
+
+			$.couch.db('inventoria').view('inventoria/search', {
+				"keys": keys, 
+				success: function (res) { outputResult(res) }
+			});
+
+			
+		});
+	}
+
+	var outputResult = function (data) {
+
+		$('#searchResults').html('');
+		
+		jQuery.each(data.rows, function(i, doc) {
+			var html = '<tr><td><a href="'+o.uri+'/_design/inventoria/_show/item/'+doc.id+'">'+doc.value.item+'</a></td><td>'+doc.value.city+'</td></tr>';
+			$('#searchResults').append(html);
+		});
+
+		console.log(data);
+	}
+
+	var buildQuery = function (str) {
+
+		var query = "";
+		
+		// RegExp for finding "words in quotes"
+		var quoted = new RegExp("\".*?\"");
+
+		// Find quoted item
+		var item = quoted.exec(str);
+		if (item != null) {
+			str = str.replace(item, '');
+			query = 'item:'+item;
+		}
+
+		// Trim away whitespaces
+		str = str.replace(/^\s+|\s+$/g, '');
+		
+		var words = str.split(' ');
+
+		jQuery.each(words, function(i, word) {
+			// Do we have a key:val match?
+			if (word.search(':') > -1) {
+				if (query != '')
+					query += ' AND ';
+				query += word;
+				kv_match = true;
+			}
+			// item only search
+			else if (word != '') {
+				if (query != '')
+					query += ' OR ';
+				query += 'item:'+word;
+			}
+		});
+
+		return query;
+	}
+}
+
 function User () {
 
 	that = this;
@@ -147,6 +200,35 @@ function User () {
 				that.showControlBar();
 			}
 		});
+	}
+}
+
+// Based on: http://www.quirksmode.org/js/cookies.html
+function Cookie () {
+
+	this.create = function (name,value,days) {
+		if (days) {
+			var date = new Date();
+			date.setTime(date.getTime()+(days*24*60*60*1000));
+			var expires = "; expires="+date.toGMTString();
+		}
+		else var expires = "";
+		document.cookie = name+"="+value+expires+"; path=/";
+	}
+
+	this.read = function (name) {
+		var nameEQ = name + "=";
+		var ca = document.cookie.split(';');
+		for(var i=0;i < ca.length;i++) {
+			var c = ca[i];
+			while (c.charAt(0)==' ') c = c.substring(1,c.length);
+			if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+		}
+		return null;
+	}
+
+	this.erase = function (name) {
+		this.create(name,"",-1);
 	}
 }
 
@@ -212,34 +294,5 @@ var message = function (message) {
 	switch (message) {
 	case 'new_field':
 		return tag+'For varje informationsrad du fyller i laggs automatiskt ett nytt falt till -- fardigt att redigera!</span>'+detag;
-	}
-}
-
-// Based on: http://www.quirksmode.org/js/cookies.html
-function Cookie () {
-
-	this.create = function (name,value,days) {
-		if (days) {
-			var date = new Date();
-			date.setTime(date.getTime()+(days*24*60*60*1000));
-			var expires = "; expires="+date.toGMTString();
-		}
-		else var expires = "";
-		document.cookie = name+"="+value+expires+"; path=/";
-	}
-
-	this.read = function (name) {
-		var nameEQ = name + "=";
-		var ca = document.cookie.split(';');
-		for(var i=0;i < ca.length;i++) {
-			var c = ca[i];
-			while (c.charAt(0)==' ') c = c.substring(1,c.length);
-			if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
-		}
-		return null;
-	}
-
-	this.erase = function (name) {
-		this.create(name,"",-1);
 	}
 }
