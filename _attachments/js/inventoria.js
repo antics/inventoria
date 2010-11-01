@@ -38,8 +38,19 @@ $(document).ready(function(){
 	$('.value').live('focus', function () {
 		// Check if we are editing the last input field.
 		// If not, we do not want to add another field.
-		if ($(this).parent().next().hasClass('last'))
-			addFormField();
+		if ($(this).parent().next().hasClass('last')) {
+
+			if (!first_time) {
+				message = msg.t('new_field');
+				first_time = 1;
+			} else {
+				message = '';
+				$('.message.new_field').remove();
+			}
+			
+			new_input = '<div class="inputRow"><input class="key" type="text" value="" /> <input class="value" type="text" name="" />'+message+'</div>';
+			$(new_input).insertBefore('#submitInventory');
+		}
 	});
 					   
 	// Set key (name="") from previous input
@@ -76,6 +87,7 @@ $(document).ready(function(){
 
 var cookie = new Cookie();
 var user = new User();
+var msg = new Message();
 
 // Options object
 var o = {
@@ -159,17 +171,22 @@ function Search () {
 
 function User () {
 
-	that = this;
+	var that = this;
 
 	this.name = cookie.read('username');
 
 	this.login = function (data) {
-		$('input').attr('disabled', true);
-		$('.button.login').val('Loggar in...');
+		$('#login input').attr('disabled', true);
+		$('.button.login').val(msg.t('opening_pouch'));
 		$.couch.login({
 			"name": data.name,
 			"password": data.password,
-			success: function (resp) { handleLogin(); }
+			success: function (resp) { handleLogin() },
+			error: function () {
+				alert(msg.t('incorrect_login'));
+				$('#login input').attr('disabled', false);
+				$('.button.login').val(msg.t('login'));
+			}
 		});
 	}
 
@@ -187,8 +204,8 @@ function User () {
 	}
 
 	this.showLoginForm = function () {
-		$('input').attr('disabled', false);
-		$('.button.login').val('Logga in');
+		$('#login input').attr('disabled', false);
+		$('.button.login').val(msg.t('login'));
 		$('#controlBar').hide();
 		$('#login').show();
 	}
@@ -232,14 +249,40 @@ function Cookie () {
 	}
 }
 
+function Message () {
+
+	var that = this;
+	
+	this.t = function (key) { return that.txt(key) }
+
+	this.txt = function (key) {
+		switch (key) {
+		case 'incorrect_login':
+			return "Incorrect username or password.";
+		case 'new_field':
+			var tag = '<span class="message new_field">'
+			var detag = '</span>';
+			return tag+'New row automatically added.'+detag;
+		case 'btn_goto_item':
+			return 'Goto Item';
+		case 'btn_new_item':
+			return 'New Item';
+		case 'opening_pouch':
+			return "Opening Pouch...";
+		case 'login':
+			return "Login";
+		}
+	}
+}
+
 var first_time = 0;
 
 var itemSaved = function (resp) {
 
 	console.log(resp);
 
-	btn_goto_item = '<button class="button gotoItem" type="button">Goto Item</button>';
-	btn_new_item = '<button class="button newItem" type="button">New Item</button>';
+	btn_goto_item = '<button class="button gotoItem" type="button">'+msg.t('btn_goto_item')+'</button>';
+	btn_new_item = '<button class="button newItem" type="button">'+msg.t('btn_new_item')+'</button>';
 
 	$('#addItem').append(btn_new_item);
 	$('#addItem').append(btn_goto_item);
@@ -257,20 +300,6 @@ var itemSaved = function (resp) {
 	});
 }
 
-var addFormField = function () {
-
-	if (!first_time) {
-		message = message('new_field');
-		first_time = 1;
-	} else {
-		message = '';
-		$('.message.new_field').remove();
-	}
-	
-	new_input = '<div class="inputRow"><input class="key" type="text" value="" /> <input class="value" type="text" name="" />'+message+'</div>';
-	$(new_input).insertBefore('#submitInventory');
-}
-
 var prepJSON = function (fields) {
 
 	if (fields.length) {
@@ -285,14 +314,4 @@ var prepJSON = function (fields) {
 		return JSON.parse(data);
 	} else
 		return {};
-}
-
-var message = function (message) {
-	var tag = '<span class="message new_field">'
-	var detag = '</span>';
-	
-	switch (message) {
-	case 'new_field':
-		return tag+'For varje informationsrad du fyller i laggs automatiskt ett nytt falt till -- fardigt att redigera!</span>'+detag;
-	}
 }
