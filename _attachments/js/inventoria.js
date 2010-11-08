@@ -1,5 +1,5 @@
 $(document).ready(function(){
-	
+
 	
 	/*********************************************************
 	 * Search
@@ -24,12 +24,21 @@ $(document).ready(function(){
 		var data = prepJSON($(this).serializeArray());
 		data.created_at = new Date();
 		data.type = 'item';
-		
+
+		// Check if user is logged in
+		$.couch.session({
+			success: function(resp) {
+				data.user = resp.name;
+				// Save data
+				$.couch.db("inventoria").saveDoc(
+					data,
+					{ success: function (resp) { itemSaved (resp) } }
+				);
+			},
+			error: function() { alert(msg.t('please_login')) }
+		});
+
 		$('input').attr('disabled', true);
-		$.couch.db("inventoria").saveDoc(
-			data,
-			{success: function (resp) { itemSaved (resp) } }
-		);
 
 		return false;
 	});
@@ -82,6 +91,17 @@ $(document).ready(function(){
 
 	// Logout button
 	$('.button.logout').click(function () { user.logout() });
+	
+
+	/*********************************************************
+	 * Signup
+	 ********************************************************/
+
+	/*
+	$('#signup').submit(function () {
+		user.signup(prepJSON($(this).serializeArray()));
+		return false;
+	});*/
 	
 });
 
@@ -181,12 +201,19 @@ function User () {
 		$.couch.login({
 			"name": data.name,
 			"password": data.password,
-			success: function (resp) { handleLogin() },
+			success: function (resp) { console.log(resp); handleLogin() },
 			error: function () {
 				alert(msg.t('incorrect_login'));
 				$('#login input').attr('disabled', false);
 				$('.button.login').val(msg.t('login'));
 			}
+		});
+	}
+
+	this.signup = function (data) {
+		user_doc = { "name": data.name }
+		$.couch.signup(user_doc, data.password, {
+			success: function (resp) { console.log(resp) }
 		});
 	}
 
@@ -257,6 +284,8 @@ function Message () {
 
 	this.txt = function (key) {
 		switch (key) {
+		case 'please_login':
+			'Please login before submitting any new items.';
 		case 'incorrect_login':
 			return "Incorrect username or password.";
 		case 'new_field':
