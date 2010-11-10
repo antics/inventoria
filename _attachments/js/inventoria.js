@@ -76,7 +76,7 @@ $(document).ready(function(){
 	/*********************************************************
 	 * User login
 	 ********************************************************/
-	
+
 	// Prep Login form for Ajax submit
 	$('#login').submit(function () {
 		user.login(prepJSON($(this).serializeArray()));
@@ -116,8 +116,20 @@ var o = {
 	uri: "http://legnered.cloudant.com/inventoria"
 };
 
+function Pouch () {
+
+	// Get users items
+	this.open = function (username) {
+		$.couch.db('inventoria').view('inventoria/pouch', {
+			"keys": username,
+			success: function (res) { outputResult(res) }
+		});		
+	}
+}
+
 function Search () {
 
+	// Full text search for items
 	this.item = function (search_string) {
 
 		var query = buildQuery(search_string);
@@ -138,18 +150,20 @@ function Search () {
 		});
 	}
 
+	// Format and output results
 	var outputResult = function (data) {
 
 		$('#searchResults').html('');
 		
 		jQuery.each(data.rows, function(i, doc) {
-			var html = '<tr><td><a href="'+o.uri+'/_design/inventoria/_show/item/'+doc.id+'">'+doc.value.item+'</a></td><td>'+doc.value.city+'</td></tr>';
+			var html = '<tr><td><img src="/inventoria/_design/inventoria/sofa.jpg"></td><td><a href="'+o.uri+'/_design/inventoria/_show/item/'+doc.id+'">'+doc.value.item+'</a></td><td>'+doc.value.city+'</td></tr>';
 			$('#searchResults').append(html);
 		});
 
 		console.log(data);
 	}
 
+	// Build search query
 	var buildQuery = function (str) {
 
 		var query = "";
@@ -201,7 +215,7 @@ function User () {
 		$.couch.login({
 			"name": data.name,
 			"password": data.password,
-			success: function (resp) { console.log(resp); handleLogin() },
+			success: function (resp) { handleLogin() },
 			error: function () {
 				alert(msg.t('incorrect_login'));
 				$('#login input').attr('disabled', false);
@@ -225,22 +239,32 @@ function User () {
 
 	this.showControlBar = function () {
 		this.name = cookie.read('username');
-		$('#login').hide();
 		$('#controlBar .username').html(this.name);
-		$('#controlBar').show();		
+		$('#controlBar').show();
+		$('#loginBox').hide();
+		
+		// Enable site features
+		//$('.needLogin').css({'background': 'none'});
+		$('.needLogin input').attr('disabled', false);
 	}
 
 	this.showLoginForm = function () {
 		$('#login input').attr('disabled', false);
 		$('.button.login').val(msg.t('login'));
 		$('#controlBar').hide();
-		$('#login').show();
+		$('#loginBox').show('slow');
+
+		// Disable features that needs login
+		//$('.needLogin').css({'background': 'grey'});
+		$('.needLogin input').attr('disabled', true);
+
 	}
 
 	var handleLogin = function () {
  		$.couch.session({
 			success: function (res) {
 				cookie.create('username', res.userCtx.name);
+				$('#loginBox').hide('slow');
 				that.showControlBar();
 			}
 		});

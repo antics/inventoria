@@ -1,15 +1,30 @@
-<div id="content">
-  <form id="addItem" action="">		
-	<div class="inputRow">
-	  <input class="key readonly" type="text" value="city">
-	  <input class="value" type="text" name="city">
-	</div>
-	<div class="inputRow">
-	  <input class="key readonly" type="text" value="item">
-	  <input class="value" type="text" name="item">
-	</div>
-	<input id="submitInventory" class="last" type="submit" value="Save Item">
-  </form>
+  <div id="loginBox" class="section login">
+	<form id="login" action="/_session" method="post">	
+	  <label for="username">Username</label>
+	  <input id="username" type="text" name="name">
+	  <label for="password">Password</label>
+	  <input id="password" type="password" name="password">
+	  <button class="button login left" type="submit">Login</button>
+	</form>
+	<p class="right">
+	  <a href="/inventoria/_design/inventoria/_show/signup">Signup</a>
+	</p>
+  </div>
+  <div class="clear"></div>
+
+  <div class="section inputs">
+	<form id="addItem" class="needLogin" action="">		
+	  <div class="inputRow">
+		<input class="key readonly" type="text" value="city">
+		<input class="value" type="text" name="city">
+	  </div>
+	  <div class="inputRow">
+		<input class="key readonly" type="text" value="item">
+		<input class="value" type="text" name="item">
+	  </div>
+	  <input id="submitInventory" class="last" type="submit" value="Save Item">
+	</form>
+  </div>
 
   <!-- upload image -->
   <!--
@@ -17,4 +32,4 @@
 		<input type="file" name="image">
 	  </form>
 	  -->
-</div>	
+
