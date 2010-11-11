@@ -5,11 +5,12 @@ function (doc, req) {
 
 	var data = [];
 
+	// Fields to exclude in output
+	var exclude = ['_id', '_rev', '_revisions', 'created_at', 'type'];
+				   
 	// Extract item fields
 	for (var field in doc) {
-		if (field == "_id" || field == "_rev" || field == "_revisions") {
-			// do nothing, I don't know why != doesn't work
-		} else
+		if (exclude.indexOf(field) == -1)
 			data.push({field : field, value : doc[field]})
 	}
 

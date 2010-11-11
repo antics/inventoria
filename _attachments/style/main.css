@@ -37,21 +37,19 @@ header#top h1 { display: inline }
 	margin: 0 20px;
 }
 
+/** Sections */															
 .section {
 	padding: 0 20px 10px;
 	margin-bottom: 20px;
 }
-
 .section.inputs {
 	background: #f4f4f4;
 	border-top: 1px solid #e0e0e0;
 	border-bottom: 1px solid #e0e0e0;
 }
-
 .section.outputs {
 	border-bottom: 1px solid #e0e0e0;
 }
-
 .section.content { border-bottom: 1px solid #e0e0e0; }
 .section.login { background: #D18A38; }
 
@@ -72,6 +70,24 @@ form button { display: block; }
 .inputRow input { margin: 0; } 
 .key { width: 10% }
 .value { width: 50% }
+
+/** Item Page */
+#itemDocument {
+	margin-right: 10%;
+	padding: 20px;
+	background: #F0E9C6;
+	overflow: hidden;
+	-moz-box-shadow: 5px 5px 9px #575559;
+	-webkit-box-shadow: 5px 5px 9px #575559;
+	box-shadow: 5px 5px 9px #575559;
+	/* For IE 8 */
+	-ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=9, Direction=135, Color='#575559')";
+	/* For IE 5.5 - 7 */
+	filter: progid:DXImageTransform.Microsoft.Shadow(Strength=9, Direction=135, Color='#575559');
+}
+#itemDocument h1 { font-size: 1.5em }
+.itemData { width: 100% }
+.itemData td { border-bottom: 1px solid #CED4CA }
 
 /** Login */
 #loginBox {
