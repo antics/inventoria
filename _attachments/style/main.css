@@ -67,9 +67,15 @@ form button { display: block; }
 #searchResults img { width: 100px }
 
 /** Add item */
-.inputRow input { margin: 0; } 
-.key { width: 10% }
-.value { width: 50% }
+#addItem { margin-top: 10px }
+.inputRow input {
+	margin: 0 0 5px 0;
+	border: none;
+	border-bottom: 2px dotted #CED4CA;
+	background: #f7f1d4;
+} 
+.key { width: 20% }
+.value { width: 70% }
 
 /** Item Page */
 #itemDocument {

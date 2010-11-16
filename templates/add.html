@@ -13,17 +13,25 @@
   <div class="clear"></div>
 
   <div class="section inputs">
-	<form id="addItem" class="needLogin" action="">		
-	  <div class="inputRow">
-		<input class="key readonly" type="text" value="city">
-		<input class="value" type="text" name="city">
-	  </div>
-	  <div class="inputRow">
-		<input class="key readonly" type="text" value="item">
-		<input class="value" type="text" name="item">
-	  </div>
-	  <input id="submitInventory" class="last" type="submit" value="Save Item">
-	</form>
+	<div id="itemDocument">
+	  <img class="itemImage right" src="/inventoria/_design/inventoria/sofa.jpg">
+	  <form id="imageUpload" action="">
+		
+	  </form>
+	  <h1 id="itemTitle">Add new item</h1>
+	  <div class="clear"></div>
+	  <form id="addItem" class="needLogin" action="">
+		<div class="inputRow">
+		  <input class="key readonly" type="text" value="city">
+		  <input class="value" type="text" name="city">
+		</div>
+		<div class="inputRow">
+		  <input class="key readonly" type="text" value="item">
+		  <input class="value" type="text" name="item">
+		</div>
+		<input id="submitInventory" class="last" type="submit" value="Save Item">
+	  </form>
+	</div>
   </div>
 
   <!-- upload image -->

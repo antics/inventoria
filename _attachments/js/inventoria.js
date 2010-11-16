@@ -1,5 +1,16 @@
 $(document).ready(function(){
 
+	pmxdr.request({
+		uri     : "http://legnered.com/index.php",
+		callback: handleResponse
+	});
+
+	function handleResponse(response) {
+		if (!response.error) {
+			console.log(response.headers["content-type"]);
+			console.log(print(response.data));
+		} else console.log("Error: " + response.error);
+	}
 	
 	/*********************************************************
 	 * Search
@@ -313,9 +324,9 @@ function Message () {
 		case 'incorrect_login':
 			return "Incorrect username or password.";
 		case 'new_field':
-			var tag = '<span class="message new_field">'
-			var detag = '</span>';
-			return tag+'New row automatically added.'+detag;
+			var tag = '<div class="message new_field">'
+			var detag = '</div>';
+			return tag+'^^ New row automatically added.'+detag;
 		case 'btn_goto_item':
 			return 'Goto Item';
 		case 'btn_new_item':
