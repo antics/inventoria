@@ -1,16 +1,5 @@
 $(document).ready(function(){
 
-	pmxdr.request({
-		uri     : "http://legnered.com/index.php",
-		callback: handleResponse
-	});
-
-	function handleResponse(response) {
-		if (!response.error) {
-			console.log(response.headers["content-type"]);
-			console.log(print(response.data));
-		} else console.log("Error: " + response.error);
-	}
 	
 	/*********************************************************
 	 * Search
@@ -26,15 +15,31 @@ $(document).ready(function(){
 
 
 	/*********************************************************
-	 * Item Submit
+	 * Item Submit: add.html
 	 ********************************************************/
 
+	// Image upload is in an iframe containing a page
+	// on a different domain. When image is uploaded that domain
+	// (child iframe) will send a cross-domain postMessage to
+	// parent page (this). Message contains filename of saved
+	// image.
+	var filename = "";
+	$.receiveMessage(
+		function(message){
+			filename = message.data;
+		},
+		'http://images.legnered.com'
+	);
+	
 	// Item submit form
 	$('#addItem').submit(function () {
 
 		var data = prepJSON($(this).serializeArray());
 		data.created_at = new Date();
 		data.type = 'item';
+		// TODO: Change this to production domain
+		if (filename != '')
+			data.image = 'http://images.legnered.com/'+filename;
 
 		// Check if user is logged in
 		$.couch.session({
@@ -43,7 +48,9 @@ $(document).ready(function(){
 				// Save data
 				$.couch.db("inventoria").saveDoc(
 					data,
-					{ success: function (resp) { itemSaved (resp) } }
+					{ success: function (resp) {
+						itemSaved (resp);
+						console.log($('#imageUpload').attr('src')) } }
 				);
 			},
 			error: function() { alert(msg.t('please_login')) }
@@ -83,6 +90,22 @@ $(document).ready(function(){
 	$('.readonly').attr('readonly', true);
 
 
+	/*********************************************************
+	 * Item Page: item.html
+	 ********************************************************/
+
+	var big = false;
+	$('#itemImage').click(function () {
+		if(big) {
+			big = false;
+			$(this).css('width', '200px');
+		}
+		else {
+			big = true;
+			$(this).css('width', '100%');
+		}
+	});
+	
 	
 	/*********************************************************
 	 * User login

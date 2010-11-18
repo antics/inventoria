@@ -6,7 +6,7 @@ function (doc, req) {
 	var data = [];
 
 	// Fields to exclude in output
-	var exclude = ['_id', '_rev', '_revisions', 'created_at', 'type'];
+	var exclude = ['_id', '_rev', '_revisions', 'created_at', 'type', 'image'];
 				   
 	// Extract item fields
 	for (var field in doc) {
@@ -16,7 +16,8 @@ function (doc, req) {
 
 	data = {
 		item: data,
-		title : doc.item+' : '+doc.city
+		title : doc.item+' : '+doc.city,
+		image: doc.image
 	}
 
 	var html = templates.include.header + templates.item + templates.include.footer;

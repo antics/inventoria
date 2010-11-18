@@ -77,6 +77,12 @@ form button { display: block; }
 .key { width: 20% }
 .value { width: 70% }
 
+#imageUpload {
+	border: none;
+	overflow: hidden;
+	width: 200px;
+	height: 200px;
+}
 /** Item Page */
 #itemDocument {
 	margin-right: 10%;
@@ -94,6 +100,7 @@ form button { display: block; }
 #itemDocument h1 { font-size: 1.5em }
 .itemData { width: 100% }
 .itemData td { border-bottom: 1px solid #CED4CA }
+#itemImage { width: 200px; cursor: pointer; }
 
 /** Login */
 #loginBox {
