@@ -190,7 +190,7 @@ function Search () {
 		$('#searchResults').html('');
 		
 		jQuery.each(data.rows, function(i, doc) {
-			var html = '<tr><td><img src="/inventoria/_design/inventoria/sofa.jpg"></td><td><a href="'+o.uri+'/_design/inventoria/_show/item/'+doc.id+'">'+doc.value.item+'</a></td><td>'+doc.value.city+'</td></tr>';
+			var html = '<tr><td><img src="'+doc.value.image+'"></td><td><a href="'+o.uri+'/_design/inventoria/_show/item/'+doc.id+'">'+doc.value.item+'</a></td><td>'+doc.value.city+'</td></tr>';
 			$('#searchResults').append(html);
 		});
 
