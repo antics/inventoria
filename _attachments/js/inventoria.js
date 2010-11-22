@@ -22,11 +22,19 @@ $(document).ready(function(){
 	// on a different domain. When image is uploaded that domain
 	// (child iframe) will send a cross-domain postMessage to
 	// parent page (this). Message contains filename of saved
-	// image.
+	// image and location (GPS) data if available.
 	var filename = "";
+	var coordinates;
 	$.receiveMessage(
 		function(message){
-			filename = message.data;
+			var data = $.deparam(message.data);
+			filename = data.filename;
+
+			latData = data.gps.GPSLatitude;
+			longData = data.gps.GPSLongitude;
+			
+			gps = new gps();
+			coordinates = gps.convertToDec(latData, longData);
 		},
 		'http://images.legnered.com'
 	);
@@ -35,11 +43,17 @@ $(document).ready(function(){
 	$('#addItem').submit(function () {
 
 		var data = prepJSON($(this).serializeArray());
+		// Required keys
 		data.created_at = new Date();
 		data.type = 'item';
 		// TODO: Change this to production domain
 		if (filename != '')
 			data.image = 'http://images.legnered.com/'+filename;
+		// Optional location data
+		if (coordinates != null)
+			data.location = {gps: coordinates};
+
+		console.log(data);
 
 		// Check if user is logged in
 		$.couch.session({
