@@ -4,10 +4,13 @@ function (doc, req) {
 	// !code vendor/mustache.js
 
 	data = {
-		title : "Add new item"
-	}
+		title : "Add new item",
 
-	var html = templates.include.header + templates.add + templates.include.footer;
+		html_header: templates.include.header,
+		html_css_js: templates.include.css_js
+	};
+
+	var html = templates.add;
 	
 	return Mustache.to_html(html, data);
 }

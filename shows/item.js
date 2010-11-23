@@ -23,10 +23,13 @@ function (doc, req) {
 		title : doc.item+' : '+doc.city,
 		image: doc.image,
 		latitude: location.gps.latitude,
-		longitude: location.gps.longitude
-	}
+		longitude: location.gps.longitude,
 
-	var html = templates.include.header + templates.item + templates.include.footer;
+		html_header: templates.include.header,
+		html_css_js: templates.include.css_js
+	};
+
+	var html = templates.item;
 	
 	return Mustache.to_html(html, data);
 }

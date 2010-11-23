@@ -1,40 +1,62 @@
-  <div id="loginBox" class="section login">
-	<form id="login" action="/_session" method="post">	
-	  <label for="username">Username</label>
-	  <input id="username" type="text" name="name">
-	  <label for="password">Password</label>
-	  <input id="password" type="password" name="password">
-	  <button class="button login left" type="submit">Login</button>
-	</form>
-	<p class="right">
-	  <a href="/inventoria/_design/inventoria/_show/signup">Signup</a>
-	</p>
-  </div>
-  <div class="clear"></div>
+<!DOCTYPE html>
+<html>
+  <head>
+	<meta charset="utf-8">
 
-  <div class="section inputs">
-	<div id="itemDocument">
-	  <iframe id="imageUpload" class="right" src="http://images.legnered.com"></iframe>
-	  <h1 id="itemTitle">Add new item</h1>
-	  <div class="clear"></div>
-	  <form id="addItem" class="needLogin" action="">
-		<div class="inputRow">
-		  <input class="key readonly" type="text" value="city">
-		  <input class="value" type="text" name="city">
-		</div>
-		<div class="inputRow">
-		  <input class="key readonly" type="text" value="item">
-		  <input class="value" type="text" name="item">
-		</div>
-		<input id="submitInventory" class="last" type="submit" value="Save Item">
+	{{{html_css_js}}}
+	
+	<script type="text/javascript"
+			src="/inventoria/_design/inventoria/js/jquery.ba-postmessage.min.js"></script>
+	<!-- For $.deparam (postmessage data). Remember Back Button functionality though. -->
+	<script type="text/javascript"
+			src="/inventoria/_design/inventoria/js/jquery.ba-bbq.min.js"></script>
+	<script type="text/javascript"
+			src="/inventoria/_design/inventoria/js/inventoria.add.js"></script>
+
+	<title>{{title}}</title>
+  </head>
+  <body>
+
+	{{{html_header}}}
+	
+	<div id="loginBox" class="section login">
+	  <form id="login" action="/_session" method="post">	
+		<label for="username">Username</label>
+		<input id="username" type="text" name="name">
+		<label for="password">Password</label>
+		<input id="password" type="password" name="password">
+		<button class="button login left" type="submit">Login</button>
 	  </form>
+	  <p class="right">
+		<a href="/inventoria/_design/inventoria/_show/signup">Signup</a>
+	  </p>
 	</div>
-  </div>
+	<div class="clear"></div>
 
-  <!-- upload image -->
-  <!--
-	  <form id="uploadImage" action="http://127.0.0.1:8888/" method="post" enctype="multipart/form-data">
-		<input type="file" name="image">
-	  </form>
-	  -->
+	<div class="section inputs">
+	  <div id="itemDocument">
+		<iframe id="imageUpload" class="right" src="http://images.legnered.com"></iframe>
+		<h1 id="itemTitle">Add new item</h1>
+		<div class="clear"></div>
+		<form id="addItem" class="needLogin" action="">
+		  <div class="inputRow">
+			<input class="key readonly" type="text" value="city">
+			<input class="value" type="text" name="city">
+		  </div>
+		  <div class="inputRow">
+			<input class="key readonly" type="text" value="item">
+			<input class="value" type="text" name="item">
+		  </div>
+		  <input id="submitInventory" class="last" type="submit" value="Save Item">
+		</form>
+	  </div>
+	</div>
 
+	<!-- upload image -->
+	<!--
+		<form id="uploadImage" action="http://127.0.0.1:8888/" method="post" enctype="multipart/form-data">
+		  <input type="file" name="image">
+		</form>
+		-->
+  </body>
+</html>

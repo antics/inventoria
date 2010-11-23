@@ -1,20 +1,36 @@
-<div class="section inputs">
-  <form id="search" method="post" action="#">
-	<p>
-	  <input id="searchString" type="text" value="">
-	  <button type="submit">Search</button>
-	</p>
-	<p><small>Example: "Levis Jeans" color:blue size:32</small></p>
-  </form>
-</div>
+<!DOCTYPE html>
+<html>
+  <head>
+	<meta charset="utf-8">
 
-<div class="section outputs">
-  <table id="searchResults">
-	
-  </table>
-</div>
-<!--
-<table id="recentItems">
-  <tr><th>Item</th><th>City</th></tr>
-</table>
--->
+	{{{html_css_js}}}
+
+	<script src="/inventoria/_design/inventoria/js/inventoria.index.js"></script>
+
+	<title>{{title}}</title>
+  </head>
+  <body>
+
+	{{{html_header}}}
+	<div class="section inputs">
+	  <form id="search" method="post" action="#">
+		<p>
+		  <input id="searchString" type="text" value="">
+		  <button type="submit">Search</button>
+		</p>
+		<p><small>Example: "Levis Jeans" color:blue size:32</small></p>
+	  </form>
+	</div>
+
+	<div class="section outputs">
+	  <table id="searchResults">
+		
+	  </table>
+	</div>
+	<!--
+		<table id="recentItems">
+		  <tr><th>Item</th><th>City</th></tr>
+		</table>
+		-->
+  </body>
+</html>

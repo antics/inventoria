@@ -1,4 +1,5 @@
 $(document).ready(function(){
+	/*
 	$.couch.db("inventoria").view(
 		'inventoria/recent-items',
 		{
@@ -10,5 +11,6 @@ $(document).ready(function(){
 			}
 		}
 	);
+	*/
 });
 	

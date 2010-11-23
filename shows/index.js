@@ -4,10 +4,13 @@ function (doc, req) {
 	// !code vendor/mustache.js
 
 	data = {
-		title : "Welcome to Inventoria"
-	}
+		title : "Welcome to Inventoria",
 
-	var html = templates.include.header + templates.index + templates.include.footer;
-	
+		html_header: templates.include.header,
+		html_css_js: templates.include.css_js
+	};
+
+	var html = templates.index;
+
 	return Mustache.to_html(html, data);
 }
