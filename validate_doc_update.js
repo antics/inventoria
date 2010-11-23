@@ -26,9 +26,14 @@ function (newDoc, oldDoc, userCtx) {
 	unchanged('created_at');
 	unchanged('user');
 
+	//
+	// TODO: implement _usersdb
+	//
+	/*
 	if (!userCtx.name)
 		unauthorized("Please log in to post a new item.");
 
 	if (newDoc.user != userCtx.name)
 		unauthorized("Only God can rename your soul.");
+	*/
 }

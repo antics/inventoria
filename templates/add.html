@@ -18,7 +18,7 @@
   <body>
 
 	{{{html_header}}}
-	
+
 	<div id="loginBox" class="section login">
 	  <form id="login" action="/_session" method="post">	
 		<label for="username">Username</label>
@@ -47,7 +47,15 @@
 			<input class="key readonly" type="text" value="item">
 			<input class="value" type="text" name="item">
 		  </div>
-		  <input id="submitInventory" class="last" type="submit" value="Save Item">
+
+		  <div id="userData" class="last">
+			<label for="userEmail">Email</label>
+			<input id="userEmail" type="text" name="userEmail">
+			<label for="userPassword">Password</label>
+			<input id="userPassword" type="text" name="userPassword">
+		  </div>
+		  
+		  <input id="submitInventory" type="submit" value="Save Item">
 		</form>
 	  </div>
 	</div>

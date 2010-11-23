@@ -30,9 +30,21 @@ $(document).ready(function () {
 	$('#addItem').submit(function () {
 
 		var data = prepJSON($(this).serializeArray());
+
+		//
 		// Required keys
+		//
 		data.created_at = new Date();
 		data.type = 'item';
+		// prepJSON ignores these two fields, we want to
+		// add them manually:
+		userEmail = $('#userEmail').val();
+		userPassw = $('#userPassword').val();
+		data.user = {
+			email: userEmail,
+			password: hex_sha1(userEmail+userPassw)
+		};
+		
 		// TODO: Change this to production domain
 		if (filename != '')
 			data.image = 'http://images.legnered.com/'+filename;
@@ -42,7 +54,19 @@ $(document).ready(function () {
 
 		console.log(data);
 
+		// Save data
+		$.couch.db("inventoria").saveDoc(
+			data, {
+				success: function (resp) {
+					itemSaved (resp);
+				}
+			}
+		);
+
+		//
 		// Check if user is logged in
+		// TODO: not implemented as of yet.
+		/*
 		$.couch.session({
 			success: function(resp) {
 				data.user = resp.name;
@@ -56,6 +80,7 @@ $(document).ready(function () {
 			},
 			error: function() { alert(msg.t('please_login')) }
 		});
+		*/
 
 		$('input').attr('disabled', true);
 
@@ -78,7 +103,7 @@ $(document).ready(function () {
 			}
 			
 			new_input = '<div class="inputRow"><input class="key" type="text" value="" /> <input class="value" type="text" name="" />'+message+'</div>';
-			$(new_input).insertBefore('#submitInventory');
+			$(new_input).insertBefore('#userData');
 		}
 	});
 					   
@@ -149,7 +174,8 @@ var prepJSON = function (fields) {
 	if (fields.length) {
 		var data = '{';
 		jQuery.each(fields, function(i, field) {
-			data = data+'"'+field.name+'": "'+field.value+'",';
+			if(field.name != 'userEmail' && field.name != 'userPassword')
+				data = data+'"'+field.name+'": "'+field.value+'",';
 		});
 		// Remove last comma
 		data = data.slice(0, -1);
