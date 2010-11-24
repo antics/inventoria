@@ -15,18 +15,23 @@ $(document).ready(function () {
 });
 
 function initializeMap (lat, lng) {
-	var latlng = new google.maps.LatLng(lat, lng);
-	var myOptions = {
-		zoom: 16,
-		center: latlng,
-		mapTypeId: google.maps.MapTypeId.ROADMAP
-	};
-	var map = new google.maps.Map(document.getElementById("mapCanvas"), myOptions);
 
-	var marker = new google.maps.Marker({
-		position: latlng,
-		title: 'Item location'
-	});
+	if (lat && lng) {
+		$('#mapCanvas').css({width: '100%', height: '400px'});
+		
+		var latlng = new google.maps.LatLng(lat, lng);
+		var myOptions = {
+			zoom: 16,
+			center: latlng,
+			mapTypeId: google.maps.MapTypeId.ROADMAP
+		};
+		var map = new google.maps.Map(document.getElementById("mapCanvas"), myOptions);
 
-	marker.setMap(map);
+		var marker = new google.maps.Marker({
+			position: latlng,
+			title: 'Item location'
+		});
+
+		marker.setMap(map);
+	}
 }

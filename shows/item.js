@@ -16,14 +16,20 @@ function (doc, req) {
 			data.push({field : field, value : doc[field]})
 	}
 
-	location = doc.location;
+	var latitude = null;
+	var longitude = null;
+
+	if (doc.location) {
+		latitude = doc.location.gps.latitude;
+		longitude = doc.location.gps.longitude;
+	}
 	
 	data = {
 		item: data,
 		title : doc.item+' : '+doc.city,
 		image: doc.image,
-		latitude: location.gps.latitude,
-		longitude: location.gps.longitude,
+		latitude: latitude,
+		longitude: longitude,
 
 		html_header: templates.include.header,
 		html_css_js: templates.include.css_js
